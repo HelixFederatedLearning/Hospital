@@ -1,0 +1,22 @@
+.mt-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.mt-title { margin: 0 0 6px 0; }
+.mt-actions { display: flex; gap: 8px; align-items: center; }
+.mt-predict-all { background: linear-gradient(90deg, #22c1c3, #6366f1); }
+
+.mt-toolbar { margin-top: 12px; }
+.mt-controls { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+.mt-table-wrap { margin-top: 16px; }
+.table-scroll { overflow-x: auto; }
+.mt-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.mt-table thead th { text-align: left; padding: 10px 8px; border-bottom: 1px solid #334155; color: #cbd5e1; font-weight: 600; white-space: nowrap; }
+.mt-table tbody td { padding: 10px 8px; border-bottom: 1px solid #283046; vertical-align: middle; }
+
+.thumb { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; border: 1px solid #334155; }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+.muted { color: #9ca3af; }
+.row-actions { display: flex; gap: 8px; }
+
+@media (max-width: 720px) {
+  .mt-header { flex-direction: column; align-items: flex-start; }
+}

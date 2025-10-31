@@ -1,0 +1,58 @@
+# --- Node & package managers ---
+node_modules/
+api/node_modules/
+web/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.pid
+*.pid.lock
+
+# --- Env files (keep examples) ---
+.env
+.env.*
+!.env.example
+api/.env
+api/.env.*
+!api/.env.example
+web/.env
+web/.env.*
+!web/.env.example
+
+# --- Build / caches ---
+dist/
+build/
+coverage/
+.cache/
+.eslintcache
+web/dist/
+web/.vite/
+api/coverage/
+
+# --- Logs & temp ---
+logs/
+*.log
+api/logs/
+api/tmp/
+
+# --- OS / editor junk ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Model artifacts (don’t commit large binaries) ---
+# api/model/*.onnx
+# api/model/**/*.onnx
+
+# --- Misc ---
+*.seed
+
+# dr_model.onnx
+model/best_resnet18_aptos.pth
+
+client/node_modules
+server/node_modules

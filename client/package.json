@@ -1,0 +1,23 @@
+{
+  "name": "doctor-pro-portal-client",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "prepare:ort": "mkdir -p public/ort && cp -r node_modules/onnxruntime-web/dist/* public/ort/"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "idb-keyval": "^6.2.1",
+    "onnxruntime-web": "1.17.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.1"
+  },
+  "devDependencies": {
+    "vite": "^5.4.8"
+  }
+}
