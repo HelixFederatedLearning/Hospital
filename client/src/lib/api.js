@@ -82,3 +82,8 @@ export async function uploadTrainingBatch({ files, items }) {
   });
   return data;
 }
+
+export async function trainNow() {
+  const { data } = await axios.post(`${API_BASE}/doctor/fl/train-now`);
+  return data; // { ok, used, posted, ... } or { skipped, reason }
+}

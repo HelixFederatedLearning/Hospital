@@ -3,7 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import { getToken, uploadTrainingBatch } from '../lib/api'
 import './train-model.css'
 
+import { trainNow } from '../lib/api'  // <- add this import
 const CLASSES = ['No_DR', 'Mild', 'Moderate', 'Severe', 'Proliferative_DR']
+
+
 
 export default function TrainModel() {
   const navigate = useNavigate()
@@ -26,6 +29,21 @@ export default function TrainModel() {
   }
   function clearAll() { rows.forEach(r=>r.url&&URL.revokeObjectURL(r.url)); setRows([]) }
 
+  // async function submitTraining() {
+  //   if (!rows.length) return setToast('Please add images')
+  //   if (rows.some(r => !r.classLabel)) return setToast('Set class for each image')
+  //   setBusy(true)
+  //   try {
+  //     const files = rows.map(r => r.file)
+  //     const items = rows.map(r => ({ originalName: r.name, classLabel: r.classLabel, confidence: Number(r.confidence) }))
+  //     const res = await uploadTrainingBatch({ files, items })
+  //     setToast(`Queued ${res.saved} samples for training`)
+  //   } catch (e) {
+  //     setToast(e?.response?.data?.error || e?.message || 'Upload failed')
+  //   } finally {
+  //     setBusy(false); setTimeout(()=>setToast(''), 1800)
+  //   }
+  // }
   async function submitTraining() {
     if (!rows.length) return setToast('Please add images')
     if (rows.some(r => !r.classLabel)) return setToast('Set class for each image')
@@ -34,14 +52,27 @@ export default function TrainModel() {
       const files = rows.map(r => r.file)
       const items = rows.map(r => ({ originalName: r.name, classLabel: r.classLabel, confidence: Number(r.confidence) }))
       const res = await uploadTrainingBatch({ files, items })
-      setToast(`Queued ${res.saved} samples for training`)
+      let msg = `Queued ${res.saved} samples. `
+
+      // Immediately start local training + send delta to central
+      const trig = await trainNow()
+      if (trig?.ok) {
+        msg += `Trained on ${trig.used} sample(s) and posted delta to central.`
+      } else if (trig?.skipped) {
+        msg += `Training skipped: ${trig.reason || 'not enough data'}.`
+      } else {
+        msg += `Training did not report success.`
+      }
+
+      setToast(msg)
+      // Clear the table only if upload+train succeeded
+      setRows([])
     } catch (e) {
       setToast(e?.response?.data?.error || e?.message || 'Upload failed')
     } finally {
-      setBusy(false); setTimeout(()=>setToast(''), 1800)
+      setBusy(false); setTimeout(()=>setToast(''), 2500)
     }
   }
-
   return (
     <div>
       <div className="tm-header">
