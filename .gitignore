@@ -56,3 +56,4 @@ model/best_resnet18_aptos.pth
 
 client/node_modules
 server/node_modules
+server/uploads
