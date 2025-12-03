@@ -48,9 +48,20 @@ import doctorRoutes from './routes/doctor.js';
 import { startWorkerLoop } from './worker.js';
 
 const app = express();
+const rawOrigins = process.env.CLIENT_ORIGIN || '';
+const allowedOrigins = rawOrigins.split(',').map(o => o.trim()).filter(Boolean);
 
 app.use(helmet());
-app.use(cors({ origin: process.env.CLIENT_ORIGIN, credentials: true }));
+// app.use(cors({ origin: process.env.CLIENT_ORIGIN, credentials: true }));
+app.use(cors({
+  origin: (origin, callback) => {
+    // allow requests with no origin (like mobile apps, curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(new Error('Not allowed by CORS: ' + origin), false);
+  },
+  credentials: true
+}));
 app.use(express.json({ limit: '10mb' }));
 app.use(morgan('dev'));
 

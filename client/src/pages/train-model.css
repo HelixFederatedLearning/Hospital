@@ -1,15 +1,264 @@
-.tm-header{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;}
-.tm-title{margin:0 0 6px 0;}
-.tm-toolbar{margin-top:12px;}
-.tm-controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
-.tm-table-wrap{margin-top:16px;}
-.tm-scroll{overflow-x:auto;}
-.tm-table{width:100%;border-collapse:collapse;font-size:14px;}
-.tm-table thead th{text-align:left;padding:10px 8px;border-bottom:1px solid #334155;color:#cbd5e1;font-weight:600;white-space:nowrap;}
-.tm-table tbody td{padding:10px 8px;border-bottom:1px solid #283046;vertical-align:middle;}
-.tm-thumb{width:56px;height:56px;object-fit:cover;border-radius:8px;border:1px solid #334155;}
-.tm-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;}
-.tm-actions{display:flex;gap:8px;}
-.tm-slider{width:180px;}
-.tm-badge{font-size:12px;color:#9ca3af;}
-@media (max-width:720px){.tm-header{flex-direction:column;align-items:flex-start;}}
+/* ===== Train Model Page ===== */
+
+.tm-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.tm-title {
+  margin: 0 0 6px 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.tm-badge {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* left buttons */
+.tm-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* secondary button + small variant (if not defined globally) */
+.btn-secondary {
+  background: transparent;
+  color: var(--muted);
+  border-radius: 8px;
+  border: 1px solid var(--border-soft);
+  padding: 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(15, 23, 42, 0.9);
+  border-color: var(--border);
+  color: var(--fg);
+  transform: translateY(-1px);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-sm {
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 7px;
+}
+
+/* ===== Toolbar – drag & drop uploader ===== */
+
+.tm-toolbar {
+  margin-top: 12px;
+}
+
+.tm-controls {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 14px 12px;
+  border-radius: 14px;
+  border: 1px dashed var(--border-soft);
+  background: rgba(7, 12, 26, 0.95);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+/* “Drop or click” label text */
+.tm-controls::before {
+  content: "Drop images here or click to browse";
+  font-size: 13px;
+  color: var(--fg);
+}
+
+/* Hide the real input – make whole area clickable & droppable */
+.tm-controls input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* badge sits like helper text on the right */
+.tm-controls .tm-badge {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* hover feedback */
+.tm-controls:hover {
+  border-color: var(--accent);
+  background: rgba(10, 18, 40, 0.98);
+}
+
+/* ===== Table ===== */
+
+.tm-table-wrap {
+  margin-top: 16px;
+}
+
+.tm-scroll {
+  overflow-x: auto;
+}
+
+.tm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 640px;
+}
+
+.tm-table thead th {
+  text-align: left;
+  padding: 10px 8px;
+  border-bottom: 1px solid #334155;
+  color: #cbd5e1;
+  font-weight: 600;
+  white-space: nowrap;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tm-table tbody td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #283046;
+  vertical-align: middle;
+}
+
+.tm-table tbody tr:hover td {
+  background: rgba(15, 23, 42, 0.9);
+}
+
+/* thumbnail cell */
+.tm-thumb {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #334155;
+}
+
+.tm-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    monospace;
+  font-size: 13px;
+}
+
+.tm-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* slider + numeric input */
+.tm-slider {
+  width: 180px;
+}
+
+.tm-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--accent);
+  cursor: pointer;
+  box-shadow: 0 0 0 3px rgba(74, 163, 255, 0.25);
+}
+
+.tm-slider::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: #1f2933;
+}
+
+/* Firefox */
+.tm-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--accent);
+  border: none;
+  box-shadow: 0 0 0 3px rgba(74, 163, 255, 0.25);
+}
+
+.tm-slider::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: #1f2933;
+}
+
+/* shared small input style */
+.input {
+  background: #020617;
+  border-radius: 8px;
+  border: 1px solid var(--border-soft);
+  padding: 6px 8px;
+  color: var(--fg);
+  font-size: 13px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(74, 163, 255, 0.5);
+}
+
+/* empty-state row */
+.tm-table tbody tr:last-child td.tm-badge {
+  text-align: center;
+  padding: 16px 8px;
+}
+
+/* ===== Toast ===== */
+
+.toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  max-width: 340px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.98);
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+  font-size: 13px;
+  color: var(--fg);
+  z-index: 50;
+}
+
+/* ===== Responsive ===== */
+
+@media (max-width: 720px) {
+  .tm-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tm-actions {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .tm-slider {
+    width: 120px;
+  }
+}
